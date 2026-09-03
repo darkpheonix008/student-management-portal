@@ -1,16 +1,17 @@
-import attendance
-import student
-import classroom
-import class_teacher
-import student_manager as std_manager
-import attendance_manager as atd_manager
-import classroom_manager as cr_manager
-import class_teacher_manager as ct_manager
+from models import attendance, class_teacher, classroom, student
+import database
+from managers import attendance_manager as atd_manager, class_teacher_manager as ct_manager, \
+    classroom_manager as cr_manager, student_manager as std_manager
 
 student_manager = std_manager.StudentManager()
 attendance_manager = atd_manager.AttendanceManager()
 classroom_manager = cr_manager.ClassroomManager()
 class_teacher_manager = ct_manager.ClassTeacherManager()
+db = database.Database('localhost', 'root', '6465', "student_management_system")
+if db.connect():
+    print('Database connected')
+else:
+    print('Database not connected')
 def get_valid_input(message):
     while True:
         try:
@@ -26,7 +27,7 @@ attendance_manager.load_attendance()
 classroom_manager.load_classroom()
 class_teacher_manager.load_class_teachers()
 
-def student_management():
+def student_management(db):
     while True:
         print('''
         1.Add student
